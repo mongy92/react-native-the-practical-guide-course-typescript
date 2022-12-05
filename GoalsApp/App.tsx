@@ -1,3 +1,4 @@
+import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import {
   Button,
@@ -34,25 +35,28 @@ export default function App() {
     return <GoalItem item={item} onDeleteGoal={deleteGoalHandler} />;
   }
   return (
-    <View style={styles.container}>
-      <Button
-        title='Add New Goal'
-        onPress={openNewGoalModal}
-        color={'#5e0acc'}
-      />
-      <GoalInput
-        onAddGoal={addGoalHandler}
-        visible={newGoalModal}
-        onClose={closeNewGoalModal}
-      />
-      <View style={styles.list}>
-        <FlatList
-          data={goals}
-          renderItem={renderItem}
-          alwaysBounceVertical={false}
+    <>
+      <StatusBar style='light' />
+      <View style={styles.container}>
+        <Button
+          title='Add New Goal'
+          onPress={openNewGoalModal}
+          color={'#EEE5E9'}
         />
+        <GoalInput
+          onAddGoal={addGoalHandler}
+          visible={newGoalModal}
+          onClose={closeNewGoalModal}
+        />
+        <View style={styles.list}>
+          <FlatList
+            data={goals}
+            renderItem={renderItem}
+            alwaysBounceVertical={false}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 

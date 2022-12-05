@@ -1,11 +1,13 @@
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import { Button, Modal, StyleSheet, TextInput, View } from 'react-native';
 import React, { FC, useState } from 'react';
 
 interface Props {
   onAddGoal(text: string): void;
+  visible: boolean;
+  onClose(): void;
 }
 
-const GoalInput: FC<Props> = ({ onAddGoal }) => {
+const GoalInput: FC<Props> = ({ onAddGoal, visible, onClose }) => {
   const [inputText, setInputText] = useState('');
 
   function addGoalHandler() {
@@ -14,19 +16,24 @@ const GoalInput: FC<Props> = ({ onAddGoal }) => {
   }
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        placeholder='Enter your goal!'
-        style={styles.input}
-        onChangeText={setInputText}
-        value={inputText}
-      />
-      <Button
-        title='Add goal'
-        onPress={addGoalHandler}
-        disabled={inputText.trim().length === 0}
-      />
-    </View>
+    <Modal visible={visible} animationType='slide'>
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder='Enter your goal!'
+          style={styles.input}
+          onChangeText={setInputText}
+          value={inputText}
+        />
+        <View style={styles.buttons}>
+          <Button
+            title='Add goal'
+            onPress={addGoalHandler}
+            disabled={inputText.trim().length === 0}
+          />
+          <Button title='Cancel' onPress={onClose} />
+        </View>
+      </View>
+    </Modal>
   );
 };
 
@@ -34,18 +41,19 @@ export default GoalInput;
 
 const styles = StyleSheet.create({
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingBottom: 24,
-    marginBottom: 24,
-    borderBottomColor: '#ccc',
-    borderBottomWidth: 1
+    flex: 1,
+    justifyContent: 'center',
+    padding: 16
   },
   input: {
-    flex: 1,
+    width: '100%',
     borderWidth: 1,
     borderColor: '#ccc',
-    marginRight: 8,
     padding: 8
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 16
   }
 });

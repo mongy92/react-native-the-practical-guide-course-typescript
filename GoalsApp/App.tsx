@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from 'react-native';
-import GoalInput from './components/GoalInputs';
+import GoalInput from './components/GoalInput';
 import GoalItem, { Goal } from './components/GoalItem';
 
 export default function App() {

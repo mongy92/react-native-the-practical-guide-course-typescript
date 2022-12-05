@@ -21,7 +21,11 @@ const GoalInput: FC<Props> = ({ onAddGoal }) => {
         onChangeText={setInputText}
         value={inputText}
       />
-      <Button title='Add goal' onPress={addGoalHandler} />
+      <Button
+        title='Add goal'
+        onPress={addGoalHandler}
+        disabled={inputText.trim().length === 0}
+      />
     </View>
   );
 };

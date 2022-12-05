@@ -15,12 +15,15 @@ interface GoalType {
 }
 
 export default function App() {
-  const [goals] = useState([
-    { id: 1, text: 'Goal1' },
-    { id: 2, text: 'Goal2' },
-    { id: 3, text: 'Goal3' },
-    { id: 4, text: 'Goal4' }
-  ]);
+  const [goals, setGoals] = useState<GoalType[]>([]);
+  const [inputText, setInputText] = useState('');
+
+  function addGoalHandler() {
+    setGoals((curr) => [
+      ...curr,
+      { id: new Date().getTime(), text: inputText }
+    ]);
+  }
 
   function renderItem({ item }: ListRenderItemInfo<GoalType>) {
     return (
@@ -32,8 +35,12 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <TextInput placeholder='Enter your goal!' style={styles.input} />
-        <Button title='Add goal' />
+        <TextInput
+          placeholder='Enter your goal!'
+          style={styles.input}
+          onChangeText={setInputText}
+        />
+        <Button title='Add goal' onPress={addGoalHandler} />
       </View>
       <View style={styles.list}>
         <FlatList

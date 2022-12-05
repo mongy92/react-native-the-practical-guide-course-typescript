@@ -10,8 +10,12 @@ export default function App() {
     setGoals((curr) => [...curr, { id: new Date().getTime(), text }]);
   }
 
+  function deleteGoalHandler(goalId: number) {
+    setGoals((curr) => curr.filter((goal) => goal.id !== goalId));
+  }
+
   function renderItem({ item }: ListRenderItemInfo<Goal>) {
-    return <GoalItem item={item} />;
+    return <GoalItem item={item} onDeleteGoal={deleteGoalHandler} />;
   }
   return (
     <View style={styles.container}>

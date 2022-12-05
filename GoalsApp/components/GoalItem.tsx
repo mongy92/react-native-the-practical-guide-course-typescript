@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
 export interface Goal {
@@ -8,13 +8,22 @@ export interface Goal {
 
 interface Props {
   item: Goal;
+  onDeleteGoal(id: number): void;
 }
 
-const GoalItem: React.FC<Props> = ({ item }) => {
+const GoalItem: React.FC<Props> = ({ item, onDeleteGoal }) => {
+  function deleteGoalHandler() {
+    onDeleteGoal(item.id);
+  }
   return (
-    <View style={styles.goalItem}>
-      <Text style={styles.goalText}>{item.text}</Text>
-    </View>
+    <Pressable
+      onPress={deleteGoalHandler}
+      style={({ pressed }) => pressed && styles.pressedStyle}
+    >
+      <View style={styles.goalItem}>
+        <Text style={styles.goalText}>{item.text}</Text>
+      </View>
+    </Pressable>
   );
 };
 
@@ -29,5 +38,8 @@ const styles = StyleSheet.create({
   },
   goalText: {
     color: '#FFF'
+  },
+  pressedStyle: {
+    opacity: 0.5
   }
 });

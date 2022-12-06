@@ -9,11 +9,17 @@ import {
 import React, { FC, PropsWithChildren } from 'react';
 interface Props {
   style?: StyleProp<ViewStyle>;
+  onPress(): void;
 }
-const PrimaryButton: FC<PropsWithChildren<Props>> = ({ children, style }) => {
+const PrimaryButton: FC<PropsWithChildren<Props>> = ({
+  children,
+  style,
+  onPress
+}) => {
   return (
     <View style={[styles.container, style]}>
       <Pressable
+        onPress={onPress}
         style={({ pressed }) => [styles.pressable, pressed && styles.pressed]}
         android_ripple={{ color: '#640233' }}
       >

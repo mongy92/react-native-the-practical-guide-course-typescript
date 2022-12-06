@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { StatusBar } from 'expo-status-bar';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { ImageBackground, StyleSheet } from 'react-native';
+import StartGameScreen from './screens/StartGameScreen';
 
 export default function App() {
   return (
@@ -10,7 +10,9 @@ export default function App() {
         resizeMode='cover'
         style={styles.container}
         imageStyle={styles.image}
-      />
+      >
+        <StartGameScreen />
+      </ImageBackground>
     </LinearGradient>
   );
 }

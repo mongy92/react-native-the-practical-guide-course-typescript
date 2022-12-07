@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   text: {
     color: COLORS.white,
     textAlign: 'center',
-    fontWeight: 'bold'
+    fontFamily: 'oswald-bold'
   },
   pressed: {
     opacity: 0.5

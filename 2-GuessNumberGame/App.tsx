@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { useMemo, useState } from 'react';
-import { ImageBackground, StyleSheet } from 'react-native';
+import { ImageBackground, SafeAreaView, StyleSheet } from 'react-native';
 import GameScreen from './screens/GameScreen';
 import StartGameScreen from './screens/StartGameScreen';
 
@@ -9,7 +9,7 @@ export default function App() {
 
   const screen = useMemo(() => {
     return pickedNumber ? (
-      <GameScreen />
+      <GameScreen userNumber={pickedNumber} />
     ) : (
       <StartGameScreen onPickNumber={setPickedNumber} />
     );
@@ -22,7 +22,7 @@ export default function App() {
         style={styles.container}
         imageStyle={styles.image}
       >
-        {screen}
+        <SafeAreaView style={styles.container}>{screen}</SafeAreaView>
       </ImageBackground>
     </LinearGradient>
   );

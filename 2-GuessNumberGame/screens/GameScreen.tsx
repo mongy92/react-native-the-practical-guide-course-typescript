@@ -6,7 +6,7 @@ import {
   Text,
   View
 } from 'react-native';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Title from '../components/Title';
 import { COLORS } from '../constants/colors';
@@ -37,11 +37,13 @@ let MIN = 1;
 let MAX = 100;
 
 const GameScreen: FC<Props> = ({ userNumber, onGameOver }) => {
-  const [guessedNumber, setGuessedNumber] = useState(() =>
-    generateRandomNumber(MIN, MAX, userNumber)
+  const initialGuess = useMemo(
+    () => generateRandomNumber(MIN, MAX, userNumber),
+    []
   );
+  const [guessedNumber, setGuessedNumber] = useState(initialGuess);
 
-  const [rounds, setRounds] = useState<number[]>([]);
+  const [rounds, setRounds] = useState<number[]>([initialGuess]);
   useEffect(() => {
     MIN = 1;
     MAX = 100;

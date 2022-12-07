@@ -7,6 +7,7 @@ import {
   ViewStyle
 } from 'react-native';
 import React, { FC, PropsWithChildren } from 'react';
+import { COLORS } from '../constants/colors';
 interface Props {
   style?: StyleProp<ViewStyle>;
   onPress(): void;
@@ -21,7 +22,7 @@ const PrimaryButton: FC<PropsWithChildren<Props>> = ({
       <Pressable
         onPress={onPress}
         style={({ pressed }) => [styles.pressable, pressed && styles.pressed]}
-        android_ripple={{ color: '#640233' }}
+        android_ripple={{ color: COLORS.primary600 }}
       >
         <Text style={styles.text}>{children}</Text>
       </Pressable>
@@ -38,12 +39,12 @@ const styles = StyleSheet.create({
     borderRadius: 24
   },
   pressable: {
-    backgroundColor: '#72063c',
+    backgroundColor: COLORS.primary500,
     paddingHorizontal: 16,
     paddingVertical: 8
   },
   text: {
-    color: '#FFF',
+    color: COLORS.white,
     textAlign: 'center',
     fontWeight: 'bold'
   },

@@ -1,6 +1,7 @@
 import { Alert, StyleSheet, TextInput, View } from 'react-native';
 import React, { FC, useState } from 'react';
 import PrimaryButton from '../components/PrimaryButton';
+import { COLORS } from '../constants/colors';
 
 interface Props {
   onPickNumber(number: number): void;
@@ -36,7 +37,7 @@ const StartGameScreen: FC<Props> = ({ onPickNumber }) => {
         keyboardType='number-pad'
         autoCapitalize='none'
         autoCorrect={false}
-        cursorColor={'#FFF'}
+        cursorColor={COLORS.white}
         value={number}
         onChangeText={setNumber}
       />
@@ -57,13 +58,13 @@ export default StartGameScreen;
 const styles = StyleSheet.create({
   container: {
     marginTop: 100,
-    backgroundColor: '#3b021f',
+    backgroundColor: COLORS.primary800,
     marginHorizontal: 16,
     padding: 16,
     borderRadius: 4,
     elevation: 2,
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: COLORS.black,
     shadowOffset: {
       width: 0,
       height: 2
@@ -74,13 +75,13 @@ const styles = StyleSheet.create({
   input: {
     width: 50,
     height: 50,
-    borderBottomColor: '#ddb52f',
+    borderBottomColor: COLORS.secondary500,
     borderBottomWidth: 2,
     marginVertical: 8,
     fontSize: 32,
     alignItems: 'center',
     justifyContent: 'center',
-    color: '#ddb52f',
+    color: COLORS.secondary500,
     textAlign: 'center'
   },
   buttons: {

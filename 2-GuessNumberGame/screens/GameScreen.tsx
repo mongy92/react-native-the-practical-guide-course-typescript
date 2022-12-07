@@ -3,6 +3,8 @@ import React, { FC, useState } from 'react';
 import Title from '../components/Title';
 import { COLORS } from '../constants/colors';
 import PrimaryButton from '../components/PrimaryButton';
+import InstructionText from '../components/InstructionText';
+import Card from '../components/Card';
 
 interface Props {
   userNumber: number;
@@ -65,11 +67,13 @@ const GameScreen: FC<Props> = ({ userNumber, onGameOver }) => {
       <View style={styles.numberContainer}>
         <Text style={styles.numberText}>{guessedNumber}</Text>
       </View>
-      <Text>Higher or Lower</Text>
-      <View>
-        <PrimaryButton onPress={onPressMinus}>-</PrimaryButton>
-        <PrimaryButton onPress={onPressPlus}>+</PrimaryButton>
-      </View>
+      <Card>
+        <InstructionText>Higher or Lower</InstructionText>
+        <View>
+          <PrimaryButton onPress={onPressMinus}>-</PrimaryButton>
+          <PrimaryButton onPress={onPressPlus}>+</PrimaryButton>
+        </View>
+      </Card>
     </View>
   );
 };
@@ -86,7 +90,7 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderColor: COLORS.secondary500,
     borderRadius: 8,
-    margin: 24,
+    margin: 16,
     alignItems: 'center',
     justifyContent: 'center'
   },

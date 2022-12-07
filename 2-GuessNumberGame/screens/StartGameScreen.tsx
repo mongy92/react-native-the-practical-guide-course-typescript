@@ -2,6 +2,9 @@ import { Alert, StyleSheet, TextInput, View } from 'react-native';
 import React, { FC, useState } from 'react';
 import PrimaryButton from '../components/PrimaryButton';
 import { COLORS } from '../constants/colors';
+import Card from '../components/Card';
+import Title from '../components/Title';
+import InstructionText from '../components/InstructionText';
 
 interface Props {
   onPickNumber(number: number): void;
@@ -31,24 +34,28 @@ const StartGameScreen: FC<Props> = ({ onPickNumber }) => {
   }
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        maxLength={2}
-        keyboardType='number-pad'
-        autoCapitalize='none'
-        autoCorrect={false}
-        cursorColor={COLORS.white}
-        value={number}
-        onChangeText={setNumber}
-      />
-      <View style={styles.buttons}>
-        <PrimaryButton style={styles.button} onPress={resetNumber}>
-          Reset
-        </PrimaryButton>
-        <PrimaryButton style={styles.button} onPress={onConfirm}>
-          Confirm
-        </PrimaryButton>
-      </View>
+      <Title>Guess My Number</Title>
+      <Card>
+        <InstructionText>Enter Number</InstructionText>
+        <TextInput
+          style={styles.input}
+          maxLength={2}
+          keyboardType='number-pad'
+          autoCapitalize='none'
+          autoCorrect={false}
+          cursorColor={COLORS.white}
+          value={number}
+          onChangeText={setNumber}
+        />
+        <View style={styles.buttons}>
+          <PrimaryButton style={styles.button} onPress={resetNumber}>
+            Reset
+          </PrimaryButton>
+          <PrimaryButton style={styles.button} onPress={onConfirm}>
+            Confirm
+          </PrimaryButton>
+        </View>
+      </Card>
     </View>
   );
 };
@@ -57,20 +64,9 @@ export default StartGameScreen;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100,
-    backgroundColor: COLORS.primary800,
-    marginHorizontal: 16,
-    padding: 16,
-    borderRadius: 4,
-    elevation: 2,
+    flex: 1,
     alignItems: 'center',
-    shadowColor: COLORS.black,
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 4
+    marginTop: 30
   },
   input: {
     width: 50,

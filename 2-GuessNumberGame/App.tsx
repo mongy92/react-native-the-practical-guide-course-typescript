@@ -20,8 +20,9 @@ export default function App() {
     setGameOver(false);
   }
 
-  function onGameOver() {
+  function onGameOver(roundNumber: number) {
     setGameOver(true);
+    setRounds(roundNumber);
   }
 
   function onRestart() {

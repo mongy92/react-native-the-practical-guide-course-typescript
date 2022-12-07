@@ -1,4 +1,11 @@
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import {
+  Alert,
+  FlatList,
+  ListRenderItemInfo,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Title from '../components/Title';
@@ -6,10 +13,11 @@ import { COLORS } from '../constants/colors';
 import PrimaryButton from '../components/PrimaryButton';
 import InstructionText from '../components/InstructionText';
 import Card from '../components/Card';
+import GuessLogItem from '../components/GuessLogItem';
 
 interface Props {
   userNumber: number;
-  onGameOver(): void;
+  onGameOver(rounds: number): void;
 }
 
 function generateRandomNumber(
@@ -29,13 +37,15 @@ let MIN = 1;
 let MAX = 100;
 
 const GameScreen: FC<Props> = ({ userNumber, onGameOver }) => {
+  const [guessedNumber, setGuessedNumber] = useState(() =>
+    generateRandomNumber(MIN, MAX, userNumber)
+  );
+
+  const [rounds, setRounds] = useState<number[]>([]);
   useEffect(() => {
     MIN = 1;
     MAX = 100;
   }, []);
-  const [guessedNumber, setGuessedNumber] = useState(() =>
-    generateRandomNumber(MIN, MAX, userNumber)
-  );
 
   function guessNewNumber(type: 'higher' | 'lower') {
     if (
@@ -53,8 +63,9 @@ const GameScreen: FC<Props> = ({ userNumber, onGameOver }) => {
     }
     const newNumber = generateRandomNumber(MIN, MAX, guessedNumber);
     setGuessedNumber(newNumber);
+    setRounds((prev) => [newNumber, ...prev]);
     if (newNumber === userNumber) {
-      onGameOver();
+      onGameOver(rounds.length);
     }
   }
 
@@ -64,6 +75,11 @@ const GameScreen: FC<Props> = ({ userNumber, onGameOver }) => {
 
   function onPressMinus() {
     guessNewNumber('lower');
+  }
+
+  function renderItem({ index, item }: ListRenderItemInfo<number>) {
+    const roundNumber = rounds.length - index;
+    return <GuessLogItem guessNmuber={item} roundNumber={roundNumber} />;
   }
 
   return (
@@ -83,6 +99,9 @@ const GameScreen: FC<Props> = ({ userNumber, onGameOver }) => {
           </PrimaryButton>
         </View>
       </Card>
+      <View style={styles.list}>
+        <FlatList data={rounds} renderItem={renderItem} />
+      </View>
     </View>
   );
 };
@@ -114,5 +133,9 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1
+  },
+  list: {
+    flex: 1,
+    padding: 16
   }
 });

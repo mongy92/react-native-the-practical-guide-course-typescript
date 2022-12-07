@@ -1,5 +1,6 @@
 import { Alert, StyleSheet, Text, View } from 'react-native';
 import React, { FC, useState } from 'react';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import Title from '../components/Title';
 import { COLORS } from '../constants/colors';
 import PrimaryButton from '../components/PrimaryButton';
@@ -69,9 +70,13 @@ const GameScreen: FC<Props> = ({ userNumber, onGameOver }) => {
       </View>
       <Card>
         <InstructionText>Higher or Lower</InstructionText>
-        <View>
-          <PrimaryButton onPress={onPressMinus}>-</PrimaryButton>
-          <PrimaryButton onPress={onPressPlus}>+</PrimaryButton>
+        <View style={styles.buttons}>
+          <PrimaryButton onPress={onPressMinus} style={styles.button}>
+            <Ionicons name='md-remove' size={24} color={COLORS.white} />
+          </PrimaryButton>
+          <PrimaryButton onPress={onPressPlus} style={styles.button}>
+            <Ionicons name='md-add' size={24} color={COLORS.white} />
+          </PrimaryButton>
         </View>
       </Card>
     </View>
@@ -100,6 +105,10 @@ const styles = StyleSheet.create({
     color: COLORS.secondary500
   },
   buttons: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginTop: 8
+  },
+  button: {
+    flex: 1
   }
 });

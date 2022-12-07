@@ -6,6 +6,7 @@ import PrimaryButton from '../components/PrimaryButton';
 
 interface Props {
   userNumber: number;
+  onGameOver(): void;
 }
 
 function generateRandomNumber(
@@ -24,12 +25,11 @@ function generateRandomNumber(
 let MIN = 1;
 let MAX = 100;
 
-const GameScreen: FC<Props> = ({ userNumber }) => {
+const GameScreen: FC<Props> = ({ userNumber, onGameOver }) => {
   const [guessedNumber, setGuessedNumber] = useState(() =>
     generateRandomNumber(MIN, MAX, userNumber)
   );
 
-  console.log('guessedNumber', guessedNumber, userNumber);
   function guessNewNumber(type: 'higher' | 'lower') {
     if (
       (type === 'higher' && guessedNumber > userNumber) ||
@@ -47,7 +47,7 @@ const GameScreen: FC<Props> = ({ userNumber }) => {
     const newNumber = generateRandomNumber(MIN, MAX, guessedNumber);
     setGuessedNumber(newNumber);
     if (newNumber === userNumber) {
-      return alert('SUCCESS');
+      onGameOver();
     }
   }
 

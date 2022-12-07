@@ -1,5 +1,5 @@
 import { Alert, StyleSheet, Text, View } from 'react-native';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Title from '../components/Title';
 import { COLORS } from '../constants/colors';
@@ -29,6 +29,10 @@ let MIN = 1;
 let MAX = 100;
 
 const GameScreen: FC<Props> = ({ userNumber, onGameOver }) => {
+  useEffect(() => {
+    MIN = 1;
+    MAX = 100;
+  }, []);
   const [guessedNumber, setGuessedNumber] = useState(() =>
     generateRandomNumber(MIN, MAX, userNumber)
   );

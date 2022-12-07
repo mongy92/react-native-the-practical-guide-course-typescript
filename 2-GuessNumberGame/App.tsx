@@ -9,6 +9,7 @@ import { useFonts } from 'expo-font';
 export default function App() {
   const [pickedNumber, setPickedNumber] = useState<number>();
   const [gameOver, setGameOver] = useState(false);
+  const [rounds, setRounds] = useState(0);
   const [fontsLoaded] = useFonts({
     'oswald-regular': require('./assets/fonts/Oswald-Regular.ttf'),
     'oswald-bold': require('./assets/fonts/Oswald-Bold.ttf')
@@ -23,9 +24,21 @@ export default function App() {
     setGameOver(true);
   }
 
+  function onRestart() {
+    setGameOver(false);
+    setRounds(0);
+    setPickedNumber(undefined);
+  }
+
   const screen = useMemo(() => {
-    if (gameOver) {
-      return <GameOverScreen />;
+    if (gameOver && pickedNumber) {
+      return (
+        <GameOverScreen
+          userNumber={pickedNumber}
+          rounds={rounds}
+          onRestart={onRestart}
+        />
+      );
     }
     if (pickedNumber) {
       return <GameScreen userNumber={pickedNumber} onGameOver={onGameOver} />;

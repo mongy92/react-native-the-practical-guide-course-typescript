@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import Title from '../components/Title';
 import { COLORS } from '../constants/colors';
 import PrimaryButton from '../components/PrimaryButton';
-import { isSmallDevice } from '../utils/dimensions';
+import { isSmallWidthDevice } from '../utils/dimensions';
 
 interface Props {
   userNumber: number;
@@ -41,9 +41,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   imageContainer: {
-    width: isSmallDevice ? 150 : 300,
-    height: isSmallDevice ? 150 : 300,
-    borderRadius: isSmallDevice ? 75 : 150,
+    width: isSmallWidthDevice ? 150 : 300,
+    height: isSmallWidthDevice ? 150 : 300,
+    borderRadius: isSmallWidthDevice ? 75 : 150,
     overflow: 'hidden',
     marginVertical: 24
   },

@@ -15,7 +15,7 @@ import PrimaryButton from '../components/PrimaryButton';
 import InstructionText from '../components/InstructionText';
 import Card from '../components/Card';
 import GuessLogItem from '../components/GuessLogItem';
-import { isSmallDevice } from '../utils/dimensions';
+import { isSmallWidthDevice } from '../utils/dimensions';
 
 interface Props {
   userNumber: number;
@@ -120,16 +120,16 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   numberContainer: {
-    padding: isSmallDevice ? 12 : 24,
+    padding: isSmallWidthDevice ? 12 : 24,
     borderWidth: 4,
     borderColor: COLORS.secondary500,
     borderRadius: 8,
-    margin: isSmallDevice ? 12 : 24,
+    margin: isSmallWidthDevice ? 12 : 24,
     alignItems: 'center',
     justifyContent: 'center'
   },
   numberText: {
-    fontSize: isSmallDevice ? 24 : 32,
+    fontSize: isSmallWidthDevice ? 24 : 32,
     fontWeight: 'bold',
     color: COLORS.secondary500
   },

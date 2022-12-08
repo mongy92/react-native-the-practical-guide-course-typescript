@@ -1,9 +1,14 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
-import React, { FC } from 'react';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View
+} from 'react-native';
+import React, { FC, useMemo } from 'react';
 import Title from '../components/Title';
 import { COLORS } from '../constants/colors';
 import PrimaryButton from '../components/PrimaryButton';
-import { isSmallWidthDevice } from '../utils/dimensions';
 
 interface Props {
   userNumber: number;
@@ -12,10 +17,18 @@ interface Props {
 }
 
 const GameOverScreen: FC<Props> = ({ userNumber, rounds, onRestart }) => {
+  const { height } = useWindowDimensions();
+  const imageStyle = useMemo(() => {
+    return {
+      width: height < 450 ? 100 : 200,
+      height: height < 450 ? 100 : 200,
+      borderRadius: height < 450 ? 50 : 100
+    };
+  }, [height]);
   return (
     <View style={styles.contaier}>
       <Title>Game Over</Title>
-      <View style={styles.imageContainer}>
+      <View style={[styles.imageContainer, imageStyle]}>
         <Image
           source={require('../assets/images/success.png')}
           style={styles.image}
@@ -41,9 +54,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   imageContainer: {
-    width: isSmallWidthDevice ? 150 : 300,
-    height: isSmallWidthDevice ? 150 : 300,
-    borderRadius: isSmallWidthDevice ? 75 : 150,
     overflow: 'hidden',
     marginVertical: 24
   },

@@ -1,6 +1,5 @@
 import {
   Alert,
-  Dimensions,
   FlatList,
   ListRenderItemInfo,
   StyleSheet,
@@ -45,6 +44,7 @@ const GameScreen: FC<Props> = ({ userNumber, onGameOver }) => {
     []
   );
   const [guessedNumber, setGuessedNumber] = useState(initialGuess);
+  const { height } = useWindowDimensions();
 
   const [rounds, setRounds] = useState<number[]>([initialGuess]);
   useEffect(() => {
@@ -87,27 +87,55 @@ const GameScreen: FC<Props> = ({ userNumber, onGameOver }) => {
     return <GuessLogItem guessNmuber={item} roundNumber={roundNumber} />;
   }
 
-  return (
-    <View style={styles.container}>
-      <Title>Opponent's Guess</Title>
-      <View style={styles.numberContainer}>
-        <Text style={styles.numberText}>{guessedNumber}</Text>
-      </View>
-      <Card>
-        <InstructionText>Higher or Lower</InstructionText>
+  const content = useMemo(() => {
+    if (height < 400) {
+      return (
+        <>
+          <Title>Opponent's Guess</Title>
+          <View style={styles.numberContainer}>
+            <Text style={styles.numberText}>{guessedNumber}</Text>
+          </View>
+          <Card>
+            <InstructionText>Higher or Lower</InstructionText>
+            <View style={styles.buttons}>
+              <PrimaryButton onPress={onPressMinus} style={styles.button}>
+                <Ionicons name='md-remove' size={24} color={COLORS.white} />
+              </PrimaryButton>
+              <PrimaryButton onPress={onPressPlus} style={styles.button}>
+                <Ionicons name='md-add' size={24} color={COLORS.white} />
+              </PrimaryButton>
+            </View>
+          </Card>
+        </>
+      );
+    }
+    return (
+      <>
+        <Title>Opponent's Guess</Title>
         <View style={styles.buttons}>
           <PrimaryButton onPress={onPressMinus} style={styles.button}>
             <Ionicons name='md-remove' size={24} color={COLORS.white} />
           </PrimaryButton>
+          <View style={styles.numberContainer}>
+            <Text style={styles.numberText}>{guessedNumber}</Text>
+          </View>
           <PrimaryButton onPress={onPressPlus} style={styles.button}>
             <Ionicons name='md-add' size={24} color={COLORS.white} />
           </PrimaryButton>
         </View>
-      </Card>
-      <View style={styles.list}>
-        <FlatList data={rounds} renderItem={renderItem} />
-      </View>
-    </View>
+      </>
+    );
+  }, [guessedNumber, height]);
+
+  return (
+    <FlatList
+      data={rounds}
+      renderItem={renderItem}
+      ListHeaderComponent={content}
+      contentContainerStyle={styles.list}
+      bounces={false}
+      showsVerticalScrollIndicator={false}
+    />
   );
 };
 
@@ -135,13 +163,15 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 8
   },
   button: {
     flex: 1
   },
   list: {
-    flex: 1,
-    padding: 16
+    padding: 16,
+    paddingBottom: 24
   }
 });

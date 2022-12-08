@@ -1,5 +1,6 @@
 import {
   Alert,
+  Dimensions,
   FlatList,
   ListRenderItemInfo,
   StyleSheet,
@@ -14,6 +15,7 @@ import PrimaryButton from '../components/PrimaryButton';
 import InstructionText from '../components/InstructionText';
 import Card from '../components/Card';
 import GuessLogItem from '../components/GuessLogItem';
+import { isSmallDevice } from '../utils/dimensions';
 
 interface Props {
   userNumber: number;
@@ -110,22 +112,24 @@ const GameScreen: FC<Props> = ({ userNumber, onGameOver }) => {
 
 export default GameScreen;
 
+const { width: deviceWidth } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24
+    padding: 24,
+    alignItems: 'center'
   },
   numberContainer: {
-    padding: 24,
+    padding: isSmallDevice ? 12 : 24,
     borderWidth: 4,
     borderColor: COLORS.secondary500,
     borderRadius: 8,
-    margin: 16,
+    margin: isSmallDevice ? 12 : 24,
     alignItems: 'center',
     justifyContent: 'center'
   },
   numberText: {
-    fontSize: 32,
+    fontSize: isSmallDevice ? 24 : 32,
     fontWeight: 'bold',
     color: COLORS.secondary500
   },

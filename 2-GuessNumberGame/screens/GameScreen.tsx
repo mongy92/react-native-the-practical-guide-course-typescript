@@ -5,6 +5,7 @@ import {
   ListRenderItemInfo,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View
 } from 'react-native';
 import React, { FC, useEffect, useMemo, useState } from 'react';
@@ -112,7 +113,6 @@ const GameScreen: FC<Props> = ({ userNumber, onGameOver }) => {
 
 export default GameScreen;
 
-const { width: deviceWidth } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,

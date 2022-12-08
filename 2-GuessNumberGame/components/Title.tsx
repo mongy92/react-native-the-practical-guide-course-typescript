@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 16,
     borderWidth: 2,
-    borderColor: COLORS.white
+    borderColor: COLORS.white,
+    maxWidth: '80%',
+    width: 300,
+    alignSelf: 'center'
   }
 });

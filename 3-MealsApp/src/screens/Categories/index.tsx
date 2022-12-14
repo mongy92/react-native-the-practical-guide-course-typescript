@@ -1,17 +1,30 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
 import React from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootNavigationStackParams } from '../../navigation/types';
 import { testIDs } from '../../constants/testIDs';
+import { mockedCategories } from '../../mocks/mocked-categories';
+import { Category } from '../../types/Category';
+import { CategoryItem } from '../../components/CategoryItem';
 
 const CategoriesScreen = () => {
   const navigation = useNavigation<NavigationProp<RootNavigationStackParams>>();
+
+  function onPressCategory(category: Category) {
+    navigation.navigate('Meals', { categoryId: category.id });
+  }
+
+  function renderItem({ item }: ListRenderItemInfo<Category>) {
+    return <CategoryItem category={item} onPress={onPressCategory} />;
+  }
+
   return (
-    <View testID={testIDs.categoriesScreen}>
-      <Text onPress={() => navigation.navigate('Meals', { categoryId: 12 })}>
-        CategoriesScreen
-      </Text>
-    </View>
+    <FlatList
+      testID={testIDs.categoriesScreen}
+      data={mockedCategories}
+      renderItem={renderItem}
+      numColumns={2}
+    />
   );
 };
 

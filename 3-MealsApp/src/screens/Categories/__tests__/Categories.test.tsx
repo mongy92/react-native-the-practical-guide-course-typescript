@@ -42,7 +42,8 @@ describe('CategoriesScreen', () => {
     fireEvent.press(categoryItem);
 
     expect(navigation.navigate).toHaveBeenCalledWith('Meals', {
-      categoryId: mockedCategories[0].id
+      categoryId: mockedCategories[0].id,
+      title: mockedCategories[0].title
     });
   });
 });

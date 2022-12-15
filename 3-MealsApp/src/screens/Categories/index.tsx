@@ -11,7 +11,10 @@ const CategoriesScreen = () => {
   const navigation = useNavigation<NavigationProp<RootNavigationStackParams>>();
 
   function onPressCategory(category: Category) {
-    navigation.navigate('Meals', { categoryId: category.id });
+    navigation.navigate('Meals', {
+      categoryId: category.id,
+      title: category.title
+    });
   }
 
   function renderItem({ item }: ListRenderItemInfo<Category>) {

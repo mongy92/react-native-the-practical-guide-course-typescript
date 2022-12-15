@@ -1,3 +1,4 @@
 export const testIDs = {
-  categoriesScreen: 'categroies-screen'
+  categoriesScreen: 'categroies-screen',
+  mealsScreen: 'meals-screen'
 };

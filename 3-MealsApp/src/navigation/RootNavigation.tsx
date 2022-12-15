@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CategoriesScreen from '../screens/Categories';
+import MealDetailsScreen from '../screens/MealDetails';
 import MealsScreen from '../screens/Meals';
 import { RootNavigationStackParams } from './types';
 
@@ -10,6 +11,7 @@ export const RootNavigation = () => {
     <Stack.Navigator>
       <Stack.Screen name='Categories' component={CategoriesScreen} />
       <Stack.Screen name='Meals' component={MealsScreen} />
+      <Stack.Screen name='MealDetails' component={MealDetailsScreen} />
     </Stack.Navigator>
   );
 };

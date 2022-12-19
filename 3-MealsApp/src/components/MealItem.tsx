@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import React, { FC } from 'react';
 import { Meal } from '../types/Meal';
+import { MealDetails } from './MealDetails';
 
 interface Props {
   item: Meal;
@@ -27,13 +28,11 @@ export const MealItem: FC<Props> = ({ item, onPress }) => {
     >
       <Image source={{ uri: item.imageUrl }} style={styles.image} />
       <Text style={styles.title}>{item.title}</Text>
-      <View style={styles.details}>
-        <Text style={styles.detailsItem}>{item.duration}m</Text>
-        <Text style={styles.detailsItem}>
-          {item.affordability.toUpperCase()}
-        </Text>
-        <Text style={styles.detailsItem}>{item.complexity.toUpperCase()}</Text>
-      </View>
+      <MealDetails
+        duration={item.duration}
+        affordability={item.affordability}
+        complexity={item.complexity}
+      />
     </TouchableOpacity>
   );
 };
@@ -61,15 +60,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     margin: 8,
     textAlign: 'center'
-  },
-  details: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    padding: 8
-  },
-  detailsItem: {
-    marginHorizontal: 4,
-    fontSize: 12
   }
 });

@@ -1,5 +1,6 @@
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { fireEvent, render } from '@testing-library/react-native';
+import { useNavigation } from '@react-navigation/native';
+import { fireEvent } from '@testing-library/react-native';
+import { render } from '../../../../test-utils';
 import { testIDs } from '../../../constants/testIDs';
 import { mockedCategories } from '../../../mocks/mocked-categories';
 import CategoriesScreen from '../index';
@@ -16,19 +17,14 @@ jest.mock('@react-navigation/native', () => {
   };
 });
 
-const Component = (
-  <NavigationContainer>
-    <CategoriesScreen />
-  </NavigationContainer>
-);
 describe('CategoriesScreen', () => {
   test('should render correctly', async () => {
-    const { getByTestId } = render(Component);
+    const { getByTestId } = render(<CategoriesScreen />);
     expect(getByTestId(testIDs.categoriesScreen));
   });
 
   test('should render list of categories', () => {
-    const { getByText } = render(Component);
+    const { getByText } = render(<CategoriesScreen />);
     mockedCategories.forEach((c) => {
       getByText(c.title);
     });
@@ -36,7 +32,7 @@ describe('CategoriesScreen', () => {
 
   test('should navigate to Meals screen on press category ', () => {
     const navigation = useNavigation();
-    const { getByText } = render(Component);
+    const { getByText } = render(<CategoriesScreen />);
     const categoryItem = getByText(mockedCategories[0].title);
 
     fireEvent.press(categoryItem);

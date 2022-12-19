@@ -1,19 +1,9 @@
-import {
-  NavigationContainer,
-  RouteProp,
-  useRoute
-} from '@react-navigation/native';
-import { render } from '@testing-library/react-native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import MealDetailsScreen from '..';
+import { render } from '../../../../test-utils';
 import { testIDs } from '../../../constants/testIDs';
 import { mockedMeals } from '../../../mocks/mocked-meals';
 import { RootNavigationStackParams } from '../../../navigation/types';
-
-const Component = (
-  <NavigationContainer>
-    <MealDetailsScreen />
-  </NavigationContainer>
-);
 
 jest.mock('@react-navigation/native', () => {
   const actualNav = jest.requireActual('@react-navigation/native');
@@ -29,7 +19,7 @@ jest.mock('@react-navigation/native', () => {
 
 describe('MealDetails', () => {
   test('should render correctly', () => {
-    const { getByTestId } = render(Component);
+    const { getByTestId } = render(<MealDetailsScreen />);
     getByTestId(testIDs.mealDetailsScreen);
   });
 
@@ -38,7 +28,7 @@ describe('MealDetails', () => {
       params: { mealId }
     } = useRoute<RouteProp<RootNavigationStackParams, 'MealDetails'>>();
     const selectedMeal = mockedMeals.find((m) => m.id == mealId)!;
-    const { getByText, getByTestId } = render(Component);
+    const { getByText, getByTestId } = render(<MealDetailsScreen />);
 
     getByTestId(testIDs.mealDetailsImage);
 

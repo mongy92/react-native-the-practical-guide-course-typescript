@@ -1,10 +1,7 @@
-import {
-  NavigationContainer,
-  useNavigation,
-  useRoute
-} from '@react-navigation/native';
-import { fireEvent, render } from '@testing-library/react-native';
+import { useNavigation } from '@react-navigation/native';
+import { fireEvent } from '@testing-library/react-native';
 import MealsScreen from '..';
+import { render } from '../../../../test-utils';
 import { testIDs } from '../../../constants/testIDs';
 import { mockedMeals } from '../../../mocks/mocked-meals';
 
@@ -26,20 +23,14 @@ jest.mock('@react-navigation/native', () => {
   };
 });
 
-const Component = (
-  <NavigationContainer>
-    <MealsScreen />
-  </NavigationContainer>
-);
-
 describe('MealsScreen', () => {
   test('should render correctly', () => {
-    const { getByTestId } = render(Component);
+    const { getByTestId } = render(<MealsScreen />);
     getByTestId(testIDs.mealsScreen);
   });
 
   test('should render list of meals', () => {
-    const { getByText, getAllByText } = render(Component);
+    const { getByText, getAllByText } = render(<MealsScreen />);
 
     const displayedMeals = mockedMeals.filter(
       (meal) => meal.categoryIds.indexOf('c1') >= 0
@@ -53,7 +44,7 @@ describe('MealsScreen', () => {
   });
 
   test('should navigate to MealDetails', () => {
-    const { getByText } = render(Component);
+    const { getByText } = render(<MealsScreen />);
     const navigation = useNavigation();
 
     const mealItem = getByText(mockedMeals[0].title);

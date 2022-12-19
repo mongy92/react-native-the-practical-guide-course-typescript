@@ -3,7 +3,7 @@ import MealDetailsScreen from '..';
 import { render } from '../../../../test-utils';
 import { testIDs } from '../../../constants/testIDs';
 import { mockedMeals } from '../../../mocks/mocked-meals';
-import { RootNavigationStackParams } from '../../../navigation/types';
+import { GlobalNavigationParams } from '../../../navigation/types';
 
 jest.mock('@react-navigation/native', () => {
   const actualNav = jest.requireActual('@react-navigation/native');
@@ -26,7 +26,7 @@ describe('MealDetails', () => {
   test('should rener the meals details data (image & title & ingredients & steps)', () => {
     const {
       params: { mealId }
-    } = useRoute<RouteProp<RootNavigationStackParams, 'MealDetails'>>();
+    } = useRoute<RouteProp<GlobalNavigationParams, 'MealDetails'>>();
     const selectedMeal = mockedMeals.find((m) => m.id == mealId)!;
     const { getByText, getByTestId } = render(<MealDetailsScreen />);
 

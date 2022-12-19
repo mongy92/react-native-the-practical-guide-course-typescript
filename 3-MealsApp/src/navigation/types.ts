@@ -1,5 +1,4 @@
 export type RootNavigationStackParams = {
-  Categories: undefined;
   Meals: {
     categoryId: string;
     title: string;
@@ -7,4 +6,13 @@ export type RootNavigationStackParams = {
   MealDetails: {
     mealId: string;
   };
+  Drawer: undefined;
 };
+
+export type DrawerNavigationParams = {
+  Categories: undefined;
+  Favorites: undefined;
+};
+
+export type GlobalNavigationParams = RootNavigationStackParams &
+  DrawerNavigationParams;

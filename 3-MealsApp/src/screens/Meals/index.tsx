@@ -6,15 +6,15 @@ import {
   useNavigation,
   useRoute
 } from '@react-navigation/native';
-import { RootNavigationStackParams } from '../../navigation/types';
+import { GlobalNavigationParams } from '../../navigation/types';
 import { testIDs } from '../../constants/testIDs';
 import { mockedMeals } from '../../mocks/mocked-meals';
 import { Meal } from '../../types/Meal';
 import { MealItem } from '../../components/MealItem';
 
 const MealsScreen = () => {
-  const { params } = useRoute<RouteProp<RootNavigationStackParams, 'Meals'>>();
-  const navigation = useNavigation<NavigationProp<RootNavigationStackParams>>();
+  const { params } = useRoute<RouteProp<GlobalNavigationParams, 'Meals'>>();
+  const navigation = useNavigation<NavigationProp<GlobalNavigationParams>>();
 
   useLayoutEffect(() => {
     navigation.setOptions({

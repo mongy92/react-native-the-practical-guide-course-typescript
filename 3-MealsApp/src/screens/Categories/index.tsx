@@ -1,14 +1,14 @@
 import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
 import React from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootNavigationStackParams } from '../../navigation/types';
+import { GlobalNavigationParams } from '../../navigation/types';
 import { testIDs } from '../../constants/testIDs';
 import { mockedCategories } from '../../mocks/mocked-categories';
 import { Category } from '../../types/Category';
 import { CategoryItem } from '../../components/CategoryItem';
 
 const CategoriesScreen = () => {
-  const navigation = useNavigation<NavigationProp<RootNavigationStackParams>>();
+  const navigation = useNavigation<NavigationProp<GlobalNavigationParams>>();
 
   function onPressCategory(category: Category) {
     navigation.navigate('Meals', {

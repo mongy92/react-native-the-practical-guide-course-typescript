@@ -1,7 +1,7 @@
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useMemo } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { RootNavigationStackParams } from '../../navigation/types';
+import { GlobalNavigationParams } from '../../navigation/types';
 import { mockedMeals } from '../../mocks/mocked-meals';
 import { testIDs } from '../../constants/testIDs';
 import { MealDetails } from '../../components/MealDetails';
@@ -10,7 +10,7 @@ import { List } from '../../components/List';
 const MealDetailsScreen = () => {
   const {
     params: { mealId }
-  } = useRoute<RouteProp<RootNavigationStackParams, 'MealDetails'>>();
+  } = useRoute<RouteProp<GlobalNavigationParams, 'MealDetails'>>();
 
   const selectedMeal = useMemo(
     () => mockedMeals.find((m) => m.id === mealId)!,

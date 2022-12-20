@@ -5,10 +5,19 @@ import { testIDs } from '../../../constants/testIDs';
 import { mockedMeals } from '../../../mocks/mocked-meals';
 import { GlobalNavigationParams } from '../../../navigation/types';
 
+jest.mock('@expo/vector-icons', () => {
+  return {
+    Ionicons: jest.fn()
+  };
+});
+
 jest.mock('@react-navigation/native', () => {
   const actualNav = jest.requireActual('@react-navigation/native');
   return {
     ...actualNav,
+    useNavigation: () => ({
+      setOptions: jest.fn()
+    }),
     useRoute: () => ({
       params: {
         mealId: 'm1'

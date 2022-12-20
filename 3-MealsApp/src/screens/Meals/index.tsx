@@ -1,4 +1,3 @@
-import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
 import React, { useLayoutEffect, useMemo } from 'react';
 import {
   NavigationProp,
@@ -7,10 +6,8 @@ import {
   useRoute
 } from '@react-navigation/native';
 import { GlobalNavigationParams } from '../../navigation/types';
-import { testIDs } from '../../constants/testIDs';
 import { mockedMeals } from '../../mocks/mocked-meals';
-import { Meal } from '../../types/Meal';
-import { MealItem } from '../../components/MealItem';
+import { MealList } from '../../components/MealList';
 
 const MealsScreen = () => {
   const { params } = useRoute<RouteProp<GlobalNavigationParams, 'Meals'>>();
@@ -22,16 +19,6 @@ const MealsScreen = () => {
     });
   }, []);
 
-  function onPressMeal(item: Meal) {
-    navigation.navigate('MealDetails', {
-      mealId: item.id
-    });
-  }
-
-  function renderItem({ item }: ListRenderItemInfo<Meal>) {
-    return <MealItem item={item} onPress={onPressMeal} />;
-  }
-
   const meals = useMemo(
     () =>
       mockedMeals.filter(
@@ -40,15 +27,7 @@ const MealsScreen = () => {
     [params]
   );
 
-  return (
-    <FlatList
-      testID={testIDs.mealsScreen}
-      data={meals}
-      renderItem={renderItem}
-    />
-  );
+  return <MealList meals={meals} />;
 };
 
 export default MealsScreen;
-
-const styles = StyleSheet.create({});

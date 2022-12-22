@@ -1,9 +1,14 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { render, RenderOptions } from '@testing-library/react-native';
 import { PropsWithChildren, ReactElement } from 'react';
+import ExpenseProvider from '../src/contexts/ExpensesContext';
 
 function AllProviders({ children }: PropsWithChildren) {
-  return <NavigationContainer>{children}</NavigationContainer>;
+  return (
+    <ExpenseProvider>
+      <NavigationContainer>{children}</NavigationContainer>
+    </ExpenseProvider>
+  );
 }
 
 const customRender = (

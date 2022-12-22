@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { GlobalStyles } from '../constants/styles';
 import ManageExpense from '../screens/ManageExpense';
 import { BottomTabNavigation } from './BottomTabs';
 import { RootStackNavigationParams } from './types';
@@ -7,7 +8,12 @@ const Stack = createNativeStackNavigator<RootStackNavigationParams>();
 
 const RootNavigation = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        headerTintColor: 'white'
+      }}
+    >
       <Stack.Screen
         name='BottomTab'
         component={BottomTabNavigation}

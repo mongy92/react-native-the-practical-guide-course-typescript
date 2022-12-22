@@ -5,6 +5,7 @@ import { BottomTabParams } from './types';
 import { Ionicons } from '@expo/vector-icons';
 import { testIDs } from '../constants/testIDs';
 import { TouchableOpacity } from 'react-native';
+import { GlobalStyles } from '../constants/styles';
 
 const BottomTab = createBottomTabNavigator<BottomTabParams>();
 
@@ -12,6 +13,10 @@ export const BottomTabNavigation = () => {
   return (
     <BottomTab.Navigator
       screenOptions={({ navigation }) => ({
+        headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        headerTintColor: 'white',
+        tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        tabBarActiveTintColor: GlobalStyles.colors.accent500,
         headerRight: ({ tintColor }) => (
           <TouchableOpacity
             testID={testIDs.addExpenseIcon}

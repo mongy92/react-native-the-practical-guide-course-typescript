@@ -18,7 +18,7 @@ jest.mock('@react-navigation/native', () => {
   };
 });
 
-describe.only('AllExpenses', () => {
+describe('AllExpenses', () => {
   test('should render correctly', () => {
     const { getByTestId } = render(<AllExpenses />);
     getByTestId(testIDs.allExpensesScreen);

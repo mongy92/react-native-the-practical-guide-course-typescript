@@ -1,20 +1,17 @@
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import ExpenseProvider from './src/contexts/ExpensesContext';
+import RootNavigation from './src/navigation/RootNavigation';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar style='light' />
+      <ExpenseProvider>
+        <NavigationContainer>
+          <RootNavigation />
+        </NavigationContainer>
+      </ExpenseProvider>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

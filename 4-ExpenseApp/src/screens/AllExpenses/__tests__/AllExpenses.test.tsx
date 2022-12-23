@@ -1,10 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
-import { fireEvent, render } from '../../../jest/test-utils';
-import { testIDs } from '../../constants/testIDs';
-import { mockedExpenses } from '../../mocks/mockedExpenses';
-import { formatDateYYYYMMDD } from '../../utils/date';
-import { getExpensesTotalAmount } from '../../utils/expenses';
-import AllExpenses from '../AllExpenses';
+import { fireEvent, render } from '../../../../jest/test-utils';
+import { testIDs } from '../../../constants/testIDs';
+import { mockedExpenses } from '../../../mocks/mockedExpenses';
+import { formatDateYYYYMMDD } from '../../../utils/date';
+import { getExpensesTotalAmount } from '../../../utils/expenses';
+import AllExpenses from '..';
 
 const mockedNavigate = jest.fn();
 

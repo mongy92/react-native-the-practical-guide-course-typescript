@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { testIDs } from '../constants/testIDs';
+import { testIDs } from '../../constants/testIDs';
 
 const ManageExpense = () => {
   return (

@@ -5,11 +5,11 @@ import {
   useState,
   useContext
 } from 'react';
-import { mockedExpenses } from '../mocks/mockedExpenses';
 import { Expense } from '../types/Expense';
 
 type ExpenseContextType = {
   expenses: Expense[];
+  setExpenses: (expenses: Expense[]) => void;
   addExpense: (expense: Expense) => void;
   updateExpense: (id: string, expense: Expense) => void;
   deleteExpense: (id: string) => void;
@@ -21,14 +21,18 @@ const ExpenseContext = createContext<ExpenseContextType>({
   expenses: [],
   addExpense: EMPTY_FUNC,
   updateExpense: EMPTY_FUNC,
-  deleteExpense: EMPTY_FUNC
+  deleteExpense: EMPTY_FUNC,
+  setExpenses: EMPTY_FUNC
 });
 
 const ExpenseProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [expenses, setExpenses] = useState<Expense[]>(mockedExpenses);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
 
   function addExpense(expense: Expense) {
-    setExpenses((prev) => [expense, ...prev]);
+    setExpenses((prev) => [
+      { id: (new Date().getTime() + Math.random()).toString(), ...expense },
+      ...prev
+    ]);
   }
 
   function updateExpense(id: string, expense: Expense) {
@@ -48,7 +52,13 @@ const ExpenseProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <ExpenseContext.Provider
-      value={{ expenses, addExpense, updateExpense, deleteExpense }}
+      value={{
+        expenses,
+        addExpense,
+        updateExpense,
+        deleteExpense,
+        setExpenses
+      }}
     >
       {children}
     </ExpenseContext.Provider>

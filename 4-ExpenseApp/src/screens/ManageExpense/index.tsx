@@ -31,12 +31,10 @@ const ManageExpense = () => {
     if (!!params?.expenseId) {
       updateExpense(params?.expenseId, expense);
     } else {
-      addExpense({
-        id: (new Date().getTime() + Math.random()).toString(),
-        ...expense
-      });
+      addExpense(expense);
     }
     navigation.goBack();
+    debugger;
   }
 
   function onDelete() {

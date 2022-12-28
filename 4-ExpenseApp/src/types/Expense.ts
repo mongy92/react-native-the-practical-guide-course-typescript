@@ -4,3 +4,7 @@ export interface Expense {
   date: Date;
   description: string;
 }
+
+export type ExpensesData = {
+  [key: string]: Expense;
+};

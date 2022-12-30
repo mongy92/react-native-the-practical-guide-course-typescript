@@ -12,6 +12,11 @@ import { GlobalNavigationParams } from '../../navigation/types';
 import { useExpenses } from '../../contexts/ExpensesContext';
 import { Expense } from '../../types/Expense';
 import { GlobalStyles } from '../../constants/styles';
+import {
+  addNewExpense,
+  deleteExpenseApi,
+  updateExpenseApi
+} from '../../utils/http';
 
 const ManageExpense = () => {
   const { addExpense, updateExpense, expenses, deleteExpense } = useExpenses();
@@ -27,18 +32,20 @@ const ManageExpense = () => {
     navigation.goBack();
   }
 
-  function onSubmit(expense: Expense) {
+  async function onSubmit(expense: Expense) {
     if (!!params?.expenseId) {
+      updateExpenseApi(params.expenseId, expense);
       updateExpense(params?.expenseId, expense);
     } else {
-      addExpense(expense);
+      const id = await addNewExpense(expense);
+      addExpense({ id, ...expense });
     }
     navigation.goBack();
-    debugger;
   }
 
   function onDelete() {
     if (params?.expenseId) {
+      deleteExpenseApi(params.expenseId);
       deleteExpense(params?.expenseId);
       navigation.goBack();
     }

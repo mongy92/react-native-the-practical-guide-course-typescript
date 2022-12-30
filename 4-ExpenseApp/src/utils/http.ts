@@ -4,7 +4,7 @@ import { formateExpensesToArray } from './expenses';
 
 export const BASE_URL = 'https://rnudemycourse-default-rtdb.firebaseio.com';
 
-export async function addExpense(expense: Expense) {
+export async function addNewExpense(expense: Expense) {
   const response = await axios.post(`${BASE_URL}/expenses.json`, expense);
   const id: string = response.data.name;
   return id;
@@ -16,10 +16,10 @@ export async function fetchExpenses() {
   return formateExpensesToArray(response.data);
 }
 
-export function updateExpense(id: string, expense: Expense) {
+export function updateExpenseApi(id: string, expense: Expense) {
   return axios.put(`${BASE_URL}/expenses/${id}.json`, expense);
 }
 
-export function deleteExpense(id: string) {
+export function deleteExpenseApi(id: string) {
   return axios.delete(`${BASE_URL}/expenses/${id}.json`);
 }

@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import ManageExpense from '..';
-import { fireEvent, render } from '../../../../jest/test-utils';
+import { fireEvent, render, waitFor } from '../../../../jest/test-utils';
 import { testIDs } from '../../../constants/testIDs';
 import { useExpenses } from '../../../contexts/ExpensesContext';
 import { mockedExpensesArray } from '../../../mocks/mockedExpenses';
@@ -58,7 +58,7 @@ describe('ManageExpense', () => {
   });
 
   describe('Update Expense', () => {
-    test('should auto fill the data and the user should be able to update epxense', () => {
+    test('should auto fill the data and the user should be able to update epxense', async () => {
       const selectedExpense = mockedExpensesArray[0];
       const { updateExpense } = useExpenses();
       const navigation = useNavigation();
@@ -67,7 +67,7 @@ describe('ManageExpense', () => {
         expenseId: selectedExpense.id
       };
 
-      const { getByText, getByTestId, debug } = render(<ManageExpense />);
+      const { getByText, getByTestId } = render(<ManageExpense />);
       const amountInput = getByTestId(testIDs.amountInput);
       const dateInput = getByTestId(testIDs.dateInput);
       const descriptionInput = getByTestId(testIDs.descriptionInput);
@@ -90,17 +90,20 @@ describe('ManageExpense', () => {
 
       const updateButton = getByText('Update');
       fireEvent.press(updateButton);
-      expect(updateExpense).toHaveBeenCalledWith(selectedExpense.id, {
-        amount: 20,
-        date: new Date('2022-12-30'),
-        description: 'test'
+
+      await waitFor(() => {
+        expect(updateExpense).toHaveBeenCalledWith(selectedExpense.id, {
+          amount: 20,
+          date: new Date('2022-12-30'),
+          description: 'test'
+        });
+        expect(navigation.goBack).toHaveBeenCalled();
       });
-      expect(navigation.goBack).toHaveBeenCalled();
     });
   });
 
   describe('Add new Expense', () => {
-    test('should have the confirm button and the use can add new expense for valid inputs', () => {
+    test('should have the confirm button and the use can add new expense for valid inputs', async () => {
       //@ts-ignore
       useRoute().params = {};
       const { addExpense } = useExpenses();
@@ -115,25 +118,32 @@ describe('ManageExpense', () => {
 
       const confirmButton = getByText('Confirm');
       fireEvent.press(confirmButton);
-      expect(addExpense).toHaveBeenCalledWith({
-        amount: 12,
-        date: new Date('2022-12-12'),
-        description: 'test'
+      await waitFor(() => {
+        expect(addExpense).toHaveBeenCalledWith({
+          id: 'id',
+          amount: 12,
+          date: new Date('2022-12-12'),
+          description: 'test'
+        });
+        expect(navigation.goBack).toHaveBeenCalled();
       });
-      expect(navigation.goBack).toHaveBeenCalled();
     });
   });
 
-  test('should have the delete icon and user can delete expense', () => {
+  test('should have the delete icon and user can delete expense', async () => {
     //@ts-ignore
     useRoute().params = {
       expenseId: mockedExpensesArray[0].id
     };
     const navigation = useNavigation();
+    const { deleteExpense } = useExpenses();
     const { getByTestId } = render(<ManageExpense />);
     const deleteButton = getByTestId(testIDs.deleteButton);
     fireEvent.press(deleteButton);
-    expect(navigation.navigate).toHaveBeenCalledWith();
+    await waitFor(() => {
+      expect(deleteExpense).toHaveBeenCalledWith(mockedExpensesArray[0].id);
+      expect(navigation.navigate).toHaveBeenCalledWith();
+    });
   });
 
   test('should show error message for invalid inputs or missing inputs', () => {

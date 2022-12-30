@@ -7,5 +7,6 @@ export const testIDs = {
   amountInput: 'amount-input',
   dateInput: 'date-input',
   descriptionInput: 'description-input',
-  deleteButton: 'delete-button'
+  deleteButton: 'delete-button',
+  loading: 'loading'
 };

@@ -1,11 +1,27 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
+import React from 'react';
 import ManageExpense from '..';
 import { fireEvent, render } from '../../../../jest/test-utils';
 import { testIDs } from '../../../constants/testIDs';
-import { mockedExpenses } from '../../../mocks/mockedExpenses';
+import { useExpenses } from '../../../contexts/ExpensesContext';
+import { mockedExpensesArray } from '../../../mocks/mockedExpenses';
 import { formatDateYYYYMMDD } from '../../../utils/date';
 
 const mockedFn = jest.fn();
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
+const mockUseContext: jest.SpyInstance = jest.spyOn(React, 'useContext');
+
+beforeEach(() => {
+  mockUseContext.mockReturnValue({
+    expenses: mockedExpensesArray,
+    updateExpense: mockedFn,
+    addExpense: mockedFn,
+    deleteExpense: mockedFn
+  });
+});
 
 jest.mock('@react-navigation/native', () => {
   const actualNav = jest.requireActual('@react-navigation/native');
@@ -43,17 +59,19 @@ describe('ManageExpense', () => {
 
   describe('Update Expense', () => {
     test('should auto fill the data and the user should be able to update epxense', () => {
-      const selectedExpense = mockedExpenses[0];
+      const selectedExpense = mockedExpensesArray[0];
+      const { updateExpense } = useExpenses();
       const navigation = useNavigation();
       //@ts-ignore
       useRoute().params = {
         expenseId: selectedExpense.id
       };
 
-      const { getByText, getByTestId } = render(<ManageExpense />);
+      const { getByText, getByTestId, debug } = render(<ManageExpense />);
       const amountInput = getByTestId(testIDs.amountInput);
       const dateInput = getByTestId(testIDs.dateInput);
       const descriptionInput = getByTestId(testIDs.descriptionInput);
+
       expect(amountInput).toHaveProp(
         'value',
         selectedExpense.amount.toString()
@@ -66,13 +84,18 @@ describe('ManageExpense', () => {
 
       expect(descriptionInput).toHaveProp('value', selectedExpense.description);
 
-      fireEvent.changeText(amountInput, 'test');
-      fireEvent.changeText(dateInput, '2022-12-12');
+      fireEvent.changeText(amountInput, 20);
+      fireEvent.changeText(dateInput, '2022-12-30');
       fireEvent.changeText(descriptionInput, 'test');
 
       const updateButton = getByText('Update');
       fireEvent.press(updateButton);
-      expect(navigation.goBack).toBeCalled();
+      expect(updateExpense).toHaveBeenCalledWith(selectedExpense.id, {
+        amount: 20,
+        date: new Date('2022-12-30'),
+        description: 'test'
+      });
+      expect(navigation.goBack).toHaveBeenCalled();
     });
   });
 
@@ -80,6 +103,7 @@ describe('ManageExpense', () => {
     test('should have the confirm button and the use can add new expense for valid inputs', () => {
       //@ts-ignore
       useRoute().params = {};
+      const { addExpense } = useExpenses();
       const navigation = useNavigation();
       const { getByTestId, getByText } = render(<ManageExpense />);
       const amountInput = getByTestId(testIDs.amountInput);
@@ -91,6 +115,11 @@ describe('ManageExpense', () => {
 
       const confirmButton = getByText('Confirm');
       fireEvent.press(confirmButton);
+      expect(addExpense).toHaveBeenCalledWith({
+        amount: 12,
+        date: new Date('2022-12-12'),
+        description: 'test'
+      });
       expect(navigation.goBack).toHaveBeenCalled();
     });
   });
@@ -98,7 +127,7 @@ describe('ManageExpense', () => {
   test('should have the delete icon and user can delete expense', () => {
     //@ts-ignore
     useRoute().params = {
-      expenseId: mockedExpenses[0].id
+      expenseId: mockedExpensesArray[0].id
     };
     const navigation = useNavigation();
     const { getByTestId } = render(<ManageExpense />);
@@ -111,7 +140,7 @@ describe('ManageExpense', () => {
     //@ts-ignore
     useRoute().params = {};
     const navigation = useNavigation();
-    const { getByTestId, getByText } = render(<ManageExpense />);
+    const { getByTestId, getByText, debug } = render(<ManageExpense />);
     const amountInput = getByTestId(testIDs.amountInput);
     const dateInput = getByTestId(testIDs.dateInput);
     fireEvent.changeText(amountInput, '12');
